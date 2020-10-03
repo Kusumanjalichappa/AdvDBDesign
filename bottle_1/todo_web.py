@@ -8,6 +8,8 @@ def get_todos():
    cursor = connection.cursor()
    cursor.execute("select * from todo")
    result = cursor.fetchall()
-   return str(result)
-    
+   cursor.close() #close the cursor, use 1 cursor per transaction.
+  # return str(result)
+   return template("show_list.tpl",rows=result)
+
 run(host='localhost', port=8080)
