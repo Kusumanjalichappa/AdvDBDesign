@@ -1,17 +1,23 @@
+# A very simple Bottle Hello World app for you to get started with...
+#from bottle import default_app
+
 from bottle import get, post, template,request,redirect
 import sqlite3
 import os
 
+
 #check which envi we are running the application dev or prod
-ON_PYTHONANYWHERE =  "PYTHONANYWHERE_DOMAIN" in os.environ 
-assert ON_PYTHONANYWHERE ==False
+ON_PYTHONANYWHERE =  "PYTHONANYWHERE_DOMAIN" in os.environ
+#assert ON_PYTHONANYWHERE ==True
 
 
 if ON_PYTHONANYWHERE:
-    pass
+    #on PA,set up to connect the WSGI server
+    from bottle import default_app
 else:
     #dev envi import run and debug
-    from bottle import  run,debug
+    from bottle import run,debug
+
 
 @get('/')
 def get_show_list():
@@ -23,16 +29,11 @@ def get_show_list():
   # return str(result)
    return template("show_list.tpl",rows=result)
 
+
 @get('/new_item')
 def get_new_item():
     return template("new_item.tpl")
 
-#create a POST handler
-@post("/new_item")
-def post_new_item():
-    #we are getting a request that has information that needs to be saved
-    new_item = request.forms.get("new_item")#so we have to get access to the request module
-    return "The new item is [" + new_item +"]..."
 
 #create a POST handler
 @post("/new_item")
@@ -44,13 +45,16 @@ def post_new_item():
     cursor.execute("insert into todo (task, status) values (?,?)", (new_item, 1))
     #cursor.lastrowid #gives the last row id
     connection.commit() #commit to the database
-    cursor.close()  
-    #return "The new item is [" +new_item + " ].." 
+    cursor.close()
+    #return "The new item is [" +new_item + " ].."
     redirect("/")#redirect to home page
 
+
 if ON_PYTHONANYWHERE:
-    pass
+    application= default_app()
 else:
     #dev envi run localhost
     debug(True)
     run(host='localhost', port=8080)
+
+
