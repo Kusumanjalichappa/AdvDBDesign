@@ -50,6 +50,19 @@ def post_new_item():
     redirect("/")#redirect to home page
 
 
+@get("/delete_item/<id:int>")
+def get_delete_item(id):
+    print("we are deleting", id)
+    connection = sqlite3.connect("todo.db")
+    cursor= connection.cursor()
+    cursor.execute("delete from todo where id=?", (id,))
+    #cursor.lastrowid #gives the last row id
+    connection.commit() #commit to the database
+    cursor.close()
+    #return "The new item is [" +new_item + " ].."
+    redirect("/")#redirect to home page
+
+
 if ON_PYTHONANYWHERE:
     application= default_app()
 else:

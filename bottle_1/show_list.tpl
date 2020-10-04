@@ -1,11 +1,18 @@
-<p>Todo List</p>
+<p><b>Basic Todo List Kusumanjali's Version</b></p>
+<hr/>
 <table border="1">
 %for row in rows: 
     <tr>
-    %for item in row:
+    %for item in row[1:]:
         <td>{{item}}</td> 
     %end
+        <td> 
+            <a href="/delete_item/{{row[0]}}"> DELETE </a> 
+        </td>
     </tr>
 %end
 </table>
-<a href="/new_item"> New Item </a>
+</br>
+</br>
+<a href="/new_item"><b> NEW ITEM </b></a>
+<hr/>
