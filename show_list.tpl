@@ -1,4 +1,4 @@
-<p><b>Basic Todo List Kusumanjali's Development Version</b></p>
+<p><b>Basic Todo List Kusumanjali's Experimantal Version</b></p>
 <hr/>
 <table border="1">
 %for row in rows:
