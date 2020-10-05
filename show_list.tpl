@@ -1,13 +1,13 @@
-<p><b>Basic Todo List Kusumanjali's Version</b></p>
+<p><b>Basic Todo List Kusumanjali's Development Version</b></p>
 <hr/>
 <table border="1">
-%for row in rows: 
+%for row in rows:
     <tr>
     %for item in row[1:]:
-        <td>{{item}}</td> 
+        <td>{{item}}</td>
     %end
-        <td> 
-            <a href="/delete_item/{{row[0]}}"> DELETE </a> 
+        <td>
+            <a href="/delete_item/{{row[0]}}"> DELETE </a>
         </td>
     </tr>
 %end
