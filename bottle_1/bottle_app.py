@@ -20,7 +20,7 @@ else:
 
 
 @get('/')
-def get_show_list():
+def get_show_list():  #route handler
    connection = sqlite3.connect("todo.db")
    cursor = connection.cursor()
    cursor.execute("select * from todo")
@@ -28,6 +28,17 @@ def get_show_list():
    cursor.close() #close the cursor, use 1 cursor per transaction.
   # return str(result)
    return template("show_list.tpl",rows=result)
+
+
+#update
+@get("/set_status/<id:int>/<value:int>")
+def get_set_status(id, value):
+    connection = sqlite3.connect("todo.db")
+    cursor = connection.cursor()
+    cursor.execute("update todo set status=? where id=?",(value, id))
+    connection.commit()
+    cursor.close()
+    redirect("/")
 
 
 @get('/new_item')
