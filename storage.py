@@ -76,10 +76,76 @@ def test_get_item():
     assert id2 ==id
     print(result)
 
+def delete_item():
+    print("testing delete_item()")
+    example_task = "This is an example item #" + _random_text()
+    id = create_item(example_task, 0)
+    returned_id, _, _ = get_item(id)
+    assert returned_id == id
+    delete_item(id)
+    assert get_item(id) == None
+
+def test_update_item():
+    print("testing update_item()")
+    example_task = "This is an example item #" + _random_text()
+    id = create_item(example_task, 0)
+    updated_task = example_task + " updated..."
+    update_item(id, updated_task)
+    _, task, status = get_item(id)
+    assert task == updated_task
+
+import random
+random.seed()
+
+def _random_text():
+    random_text = str(random.randint(10000,20000))
+    return random_text
+
+def test_create_item():
+    random_text = str(random.randint(10000,20000))
+    example_task = "This is an example item" + random_text
+    create_item(example_task, 0)
+    items= get_items()
+    found = False
+    for item in items:
+        print(item)
+        id, task,status = item
+        if task == example_task:
+            found = True
+    assert found == True
+    print("item seem to have been created")
+
+def test_update_status():
+    print("testing update_status()")
+    example_task = "This is an example item #" + _random_text()
+    id = create_item(example_task, 0)
+    _, _, status = get_item(id)
+    assert status == 0
+    update_status(id, 1)
+    _, _, status = get_item(id)
+    assert status == 1
+    update_status(id, 0)
+    _, _, status = get_item(id)
+    assert status == 0
+
+def test_delete_item():
+    print("testing delete_item()")
+    example_task = "This is an example item #" + _random_text()
+    id = create_item(example_task, 0)
+    returned_id, _, _ = get_item(id)
+    assert returned_id == id
+    delete_item(id)
+    assert get_item(id) == None
+
+
 #python idiom
 #this will make sure to run test_get_item runs only when we run the this fiel
 #directly, its mostly used to test function before incorporating it into web
 if __name__ == "__main__":
     #test_get_items()
-    test_get_item()
-    print("done")
+    #test_get_item()
+    #test_create_item()
+    test_update_status()
+    test_update_item()
+    test_delete_item()
+    print("done.")
