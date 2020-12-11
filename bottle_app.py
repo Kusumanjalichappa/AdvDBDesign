@@ -19,7 +19,7 @@ else:
     from bottle import run,debug
 
 #list all the DB functions
-from storage import get_items, get_item, update_status,create_item,update_item,delete_item
+from postgres_storage import get_items, get_item, update_status,create_item,update_item,delete_item
 
 @get('/')
 def get_show_list():
