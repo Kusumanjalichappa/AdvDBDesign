@@ -16,6 +16,9 @@
             {{row['task']}}
         </td>
         <td>
+             {{row['randomNum']}}
+        </td>
+        <td>
         %if row['status']==0:
             <a href="/update_status/{{row['_id']}}/1"><i class="material-icons">check_box_outline_blank</i></a>
         %else:

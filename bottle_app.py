@@ -4,6 +4,7 @@ import time
 import os
 #import dataset
 import pymongo
+import bson
 from bson.objectid import ObjectId
 
 #db = dataset.connect('sqlite:///todo.db')
@@ -65,7 +66,20 @@ def get_new_item():
 def post_new_item():
     # given a new task in a form, create and insert a document and with that task value
     new_task = request.forms.get("new_task").strip()
-    result = db.task.insert_one( {'task': new_task, 'status':False} )
+    random_num = request.forms.get("random_num").strip()
+    result = db.task.insert_one( {'task': new_task, 'status':False, 'randomNum':bson.Int64(random_num)} )
+    redirect('/')
+
+@get('/randomsort_num')
+def get_sort_num():
+    # sort the Random Number
+    result = db.task.find().sort('randomNum',-1)
+    return template("show_list", rows=result, session={})
+
+
+@get('/update_status/<_id>/<value:int>')
+def get_update_status(_id, value):
+    result = db.task.update_one( {"_id" : ObjectId(_id)}, {'$set': {'status': (value!=0)}} )
     redirect('/')
 
 application = default_app()
